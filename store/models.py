@@ -1,11 +1,18 @@
 import email
 from itertools import product
+from pyexpat import model
 from django.db import models
 from django.db import models
 
 
 class Collection(models.Model):
     title = models.CharField(max_length=255)
+
+
+class Promotion(models.Model):
+    description = models.CharField(max_length=255)
+    discount = models.FloatField()
+    # product_name
 
 
 class Product(models.Model):
@@ -15,6 +22,7 @@ class Product(models.Model):
     inventory = models.IntegerField()
     last_update = models.DateField(auto_now=True)
     collection = models.ForeignKey(Collection, on_delete=models.PROTECT,)
+    promotions = models.ManyToManyField(Promotion)
 
 
 class Customer(models.Model):
@@ -73,4 +81,3 @@ class CartItem(models.Model):
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.PositiveSmallIntegerField()
-    
