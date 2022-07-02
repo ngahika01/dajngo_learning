@@ -20,11 +20,12 @@ class Promotion(models.Model):
 class Product(models.Model):
     title = models.CharField(max_length=255)
     description = models.TimeField()
-    price = models.DecimalField(decimal_places=2, max_digits=6)
+    unit_price = models.DecimalField(decimal_places=2, max_digits=6)
     inventory = models.IntegerField()
     last_update = models.DateField(auto_now=True)
     collection = models.ForeignKey(Collection, on_delete=models.PROTECT,)
     promotions = models.ManyToManyField(Promotion)
+    slug = models.SlugField()
 
 
 class Customer(models.Model):
